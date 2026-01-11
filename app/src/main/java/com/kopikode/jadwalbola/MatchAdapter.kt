@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class MatchAdapter(private val listMatch: List<Match>) :
-    RecyclerView.Adapter<MatchAdapter.MatchViewHolder>() {
+class MatchAdapter(private val listMatch: List<Match>, private val onItemClick: (Match) -> Unit
+) : RecyclerView.Adapter<MatchAdapter.MatchViewHolder>() {
 
     class MatchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvStatus: TextView = view.findViewById(R.id.tvStatus)
@@ -64,7 +64,14 @@ class MatchAdapter(private val listMatch: List<Match>) :
             .placeholder(android.R.drawable.ic_menu_gallery)
             .error(android.R.drawable.stat_notify_error)
             .into(holder.imgAway)
+
+        // TAMBAHKAN INI: Saat item diklik, jalankan fungsi onItemClick
+        holder.itemView.setOnClickListener {
+            onItemClick(match)
+        }
+
+    }
+        override fun getItemCount(): Int = listMatch.size
     }
 
-    override fun getItemCount(): Int = listMatch.size
-}
+
